@@ -9,4 +9,4 @@ This program transforms pictures into ASCII art.
 python .\main.py path_to_picture
 ```
 
-path_to_picture - it can be relative or absolute path to picture
+path_to_picture - relative or absolute path to picture
