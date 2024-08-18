@@ -1,5 +1,6 @@
 import cv2
 import matplotlib.pyplot as pl
+import sys
 
 def overlap(img, origin_x, origin_y, height, width):
     # Determins overlapping based on the top left and 
@@ -26,7 +27,10 @@ def insertLetter(origin, letter, img):
     FONT_HERSHEY_SIMPLEX 
     '''
     fontScale = 1
+    'change this value to increase the size of inserted letters'
+
     thickness = 1
+    'change this value to increase the thickness of inserted letters'
     
     (txt_width, txt_height), _ = cv2.getTextSize(letter, fontFace, fontScale, thickness)
     if origin_y - txt_height < 0 or origin_x + txt_width >= img_width \
@@ -37,11 +41,9 @@ def insertLetter(origin, letter, img):
     cv2.putText(img, letter, origin, fontFace, fontScale, 0, thickness)
 
 
-img = cv2.imread('.//stationery.jpg', 0)
+img = cv2.imread(sys.argv[1], 0)
 img[img != 0] -= 1
 img[img == 0] += 1
-pl.imshow(img, cmap='gray')
-pl.show()
 # We want 0 and 255 to be special values, 
 # used to determinoverlapping of letters.
 
@@ -59,6 +61,7 @@ for y, row in enumerate(img):
             insertLetter((x, y), 'M', img)
         elif row[x] >= 0:
             insertLetter((x, y), 'W', img)
+"change letters in '' to choose what letters you want to insert"
 
 img[img != 0] = 255
 
