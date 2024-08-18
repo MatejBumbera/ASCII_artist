@@ -14,7 +14,7 @@ def insertLetter(origin, letter, img):
     # in the picture.
     origin_x, origin_y = origin
     _, img_width = img.shape
-    fontFace = cv2.FONT_HERSHEY_SCRIPT_COMPLEX 
+    fontFace = cv2.FONT_HERSHEY_TRIPLEX 
     '''fontFaces:
     FONT_HERSHEY_SCRIPT_SIMPLEX
     FONT_HERSHEY_SCRIPT_COMPLEX 
@@ -37,22 +37,24 @@ def insertLetter(origin, letter, img):
     cv2.putText(img, letter, origin, fontFace, fontScale, 0, thickness)
 
 
-img = cv2.imread('.//butterfly.jpg', 0)
-img -= 1
+img = cv2.imread('.//stationery.jpg', 0)
+img[img != 0] -= 1
 img[img == 0] += 1
+pl.imshow(img, cmap='gray')
+pl.show()
 # We want 0 and 255 to be special values, 
 # used to determinoverlapping of letters.
 
 for y, row in enumerate(img):
     for x in range(len(row)):
-        if row[x] >= 220:
+        if row[x] >= 230:
             row[x] = 254
         elif row[x] >= 200:
-            insertLetter((x, y), 'I', img)
+            insertLetter((x, y), '*', img)
         elif row[x] >= 150:
-            insertLetter((x, y), 'T', img)
+            insertLetter((x, y), '/', img)
         elif row[x] >= 100:
-            insertLetter((x, y), 'J', img)
+            insertLetter((x, y), '+', img)
         elif row[x] >= 50:
             insertLetter((x, y), 'M', img)
         elif row[x] >= 0:
