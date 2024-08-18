@@ -12,5 +12,5 @@ python .\main.py path_to_picture
 path_to_picture - relative or absolute path to picture
 
 # Dependencies:
-cv2 - pip install opencv-python
+cv2 - pip install opencv-python \n
 matplotlib - pip install matplotlib
