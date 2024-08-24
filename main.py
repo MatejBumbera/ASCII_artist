@@ -1,5 +1,4 @@
 import cv2
-import matplotlib.pyplot as pl
 import sys
 
 
@@ -23,7 +22,7 @@ def insertLetter(origin, letter, img):
     # in the picture.
     origin_x, origin_y = origin
     _, img_width = img.shape
-    fontFace = cv2.FONT_HERSHEY_TRIPLEX
+    fontFace = cv2.FONT_HERSHEY_SIMPLEX
     '''fontFaces:
     FONT_HERSHEY_SCRIPT_SIMPLEX
     FONT_HERSHEY_SCRIPT_COMPLEX
@@ -61,9 +60,9 @@ for y, row in enumerate(img):
         if row[x] >= 230:
             row[x] = 254
         elif row[x] >= 200:
-            insertLetter((x, y), '*', img)
-        elif row[x] >= 150:
             insertLetter((x, y), '/', img)
+        elif row[x] >= 150:
+            insertLetter((x, y), '*', img)
         elif row[x] >= 100:
             insertLetter((x, y), '+', img)
         elif row[x] >= 50:
@@ -79,5 +78,7 @@ for y, row in enumerate(img):
 
 img[img != 0] = 255
 
-pl.imshow(img, cmap='gray')
-pl.show()
+cv2.namedWindow("ascii_img", cv2.WINDOW_NORMAL)
+cv2.imshow("ascii_img", img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
