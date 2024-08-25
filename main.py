@@ -4,7 +4,9 @@ import sys
 
 
 def printProgress(progress):
-    print(f'Progress: |{progress*'#'}{(100-progress)*'-'}| {progress}%', end='\r')
+    bar = progress * '#'
+    fill = (100-progress)*'-'
+    print(f'Progress: |{bar}{fill}| {progress}%', end='\r')
     if progress == 100:
         print('')
 
@@ -47,10 +49,11 @@ def insertLetter(origin, letter, img):
     cv2.rectangle(img, origin, (origin_x + txt_width, origin_y - txt_height), 255, thickness=-1)
     cv2.putText(img, letter, origin, fontFace, fontScale, 0, thickness)
 
+
 progress = 0
 printProgress(progress)
 img = cv2.imread(sys.argv[1], 0)
-img[img != 0] -= 1
+img[img == 255] -= 1
 img[img == 0] += 1
 # We want 0 and 255 to be special values, 
 # used to determin overlapping of letters.

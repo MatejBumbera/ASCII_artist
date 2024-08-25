@@ -7,6 +7,22 @@
 using namespace cv;
 using namespace std;
 
+void printProgress(int progress)
+{
+    String bar = "";
+    for (int i = 0; i < progress; i++)
+    {
+        bar += "#";
+    }
+    String fill = "-";
+    for (int i = 0; i < 100 - progress; i++)
+    {
+        fill += "-";
+    }
+    cout << "Progress: |" << bar << fill << "| " << progress << "%" << "\r";
+}
+
+
 bool overlap(Mat img, int origin_x,int origin_y,Size txtSize)
 {
     /* Determins overlapping based on the top left and 
@@ -55,6 +71,7 @@ void insertLetter(int origin_x,int origin_y, String letter, Mat img)
 int main(int argc, char* argv[])
 {
     int progress = 0;
+    printProgress(progress);
     Mat img = imread(argv[1], 0);
     if (img.empty())
     {
@@ -107,7 +124,12 @@ int main(int argc, char* argv[])
                 insertLetter(col, row, "W", img);
             }
             // change letters in "" to choose what letters you want to insert
-            
+        }
+        int partialProgress = (100 * row) / (img.rows - 1);
+        if (partialProgress > progress)
+        {
+            progress = partialProgress;
+            printProgress(progress);
         }
     }
 
@@ -121,7 +143,6 @@ int main(int argc, char* argv[])
             }
         }
     }
-
 
     namedWindow("ascii_img", WINDOW_NORMAL);
     imshow("ascii_img", img);
