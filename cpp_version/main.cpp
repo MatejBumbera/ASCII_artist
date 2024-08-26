@@ -2,6 +2,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
+#include <opencv2/core/utils/logger.hpp>
 #include <iostream>
 
 using namespace cv;
@@ -14,12 +15,16 @@ void printProgress(int progress)
     {
         bar += "#";
     }
-    String fill = "-";
+    String fill = "";
     for (int i = 0; i < 100 - progress; i++)
     {
         fill += "-";
     }
     cout << "Progress: |" << bar << fill << "| " << progress << "%" << "\r";
+    if (progress == 100)
+    {
+        cout << endl;
+    }
 }
 
 
@@ -70,6 +75,7 @@ void insertLetter(int origin_x,int origin_y, String letter, Mat img)
 
 int main(int argc, char* argv[])
 {
+    cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_ERROR);
     int progress = 0;
     printProgress(progress);
     Mat img = imread(argv[1], 0);
